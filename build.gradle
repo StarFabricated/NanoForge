@@ -1,0 +1,110 @@
+plugins {
+    id 'java'
+    id 'eclipse'
+    id 'application'
+}
+
+group = 'com.nfs'
+version = '1.0-SNAPSHOT'
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.aliyun.com/repository/public/' }
+    maven { url 'https://maven.aliyun.com/repository/central' }
+    maven {
+        name "LegacyFabric"
+        url "https://repo.legacyfabric.net/legacyfabric"
+    }
+    maven {
+        url "https://jitpack.io"
+    }
+    maven {
+        url = uri("https://nexus.gtnewhorizons.com/repository/releases/")
+    }
+}
+project.ext.lwjglVersion = "2.9.4+legacyfabric.3"
+
+configurations {
+    lwjglNative
+}
+
+dependencies {
+
+    //The greatest Classloader magic in Java game history
+    //forked by GTNH-Team
+    implementation('net.minecraft:launchwrapper:1.17.4')
+    //The greatest ASM Framework in Java game history
+    //forked by FabricMC
+    implementation "net.fabricmc:sponge-mixin:0.16.3+mixin.0.8.7"
+
+    //log4j2 + slf4j
+    implementation "org.slf4j:slf4j-api:2.0.17"
+    implementation "org.slf4j:log4j-over-slf4j:2.0.17"
+    implementation 'org.apache.logging.log4j:log4j-slf4j2-impl:2.25.0'
+    implementation 'org.apache.logging.log4j:log4j-api:2.25.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.25.1'
+
+    /*
+    somehow it doesn't work , maybe wrong version
+    //Janino
+    implementation 'org.codehaus.janino:janino:3.1.12'
+    implementation 'org.codehaus.janino:commons-compiler:3.1.12'
+    implementation 'org.codehaus.janino:commons-compiler-jdk:3.1.12'
+    */
+
+    //Janino
+    implementation 'org.codehaus.janino:janino:2.7.8'
+    implementation 'org.codehaus.janino:commons-compiler:2.7.8'
+    implementation 'org.codehaus.janino:commons-compiler-jdk:2.7.8'
+
+
+    //idk dependencies
+    /* need patch
+    implementation 'com.thoughtworks.xstream:xstream:1.4.21'
+    */
+    implementation 'com.thoughtworks.xstream:xstream:1.4.16'
+    implementation "com.github.usefulness:webp-imageio:0.10.2"
+    implementation 'org.json:json:20250517'
+    implementation 'org.glassfish.jaxb:txw2:4.0.6'
+    implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+    implementation('net.java.jinput:jinput:2.0.10')
+    implementation 'com.googlecode.soundlibs:jorbis:0.0.17.4'
+
+
+    //lwjgl2 Legacy Fabric fork
+    implementation "org.lwjgl.lwjgl:lwjgl:$lwjglVersion"
+    //implementation "org.lwjgl.lwjgl:lwjgl_util_applet:$lwjglVersion"
+    implementation "org.lwjgl.lwjgl:lwjgl_util:$lwjglVersion"
+    //implementation "org.lwjgl.lwjgl:parent:$lwjglVersion"
+    implementation "org.lwjgl.lwjgl:lwjgl-platform:$lwjglVersion"
+    lwjglNative "org.lwjgl.lwjgl:lwjgl-platform:$lwjglVersion"
+
+    //game jar
+    runtimeOnly fileTree(dir: 'lib/gameJar', include: ['*.jar'])
+
+    //TODO: we have api src so...
+    //implementation(":game-api")
+
+    //it just work
+    //implementation fileTree(dir: 'lib', include: ['*.jar'])
+}
+
+tasks.register('copyAssets', Copy) {
+    from 'assets'
+    into 'run/'
+
+    inputs.dir 'assets'
+    outputs.dir 'run/'
+}
+
+tasks.register('extractNativeLib', Copy) {
+    from zipTree(configurations.runtimeClasspath.find {
+        it.name.contains("lwjgl-platform") && it.name.contains(lwjglVersion)
+    })
+    into "lib/native"
+    include "**/*.dll", "**/*.so", "**/*.dylib"
+}
+copyAssets.dependsOn extractNativeLib
