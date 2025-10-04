@@ -1,8 +1,12 @@
 # Nano Framework of Reverse Game Engineering
-Now can launch game in IDEA\
-Just a basic CoreMod Environment, no loader , no API , only LaunchWrapper.
+Now can launch game in IDEA
 
-ps: only support 0.98a
+We have `Tweak`, `Mixin`, And `EventBus`, but no `ModLoader`.\
+technically this project is equal to `(Neo)Forge` without `FML` and `AccessTransformer`, i guess.
+
+You can make what's missing yourself :)
+
+ps: we only support 0.98a
 ### how to use
 copy game jar to `lib/gameJar`\
 copy `graphics` `data` `sounds`  dir to `assets`
@@ -11,5 +15,7 @@ run  `runVanilla` task\
 or `runLanchWrapper` task
 ### ZH_CN
 致敬传奇加载器FORGE，NanoForge现已抵达远行星号😁\
-其实这玩意本来应该是某种意义上的MCP，但是我没太多精力去折腾映射，目前纯玩具。\
-谁要是闲着没事可以帮我写一下，欢迎PR😋
+其实这项目本来应该是某种MCP，但是我没太多精力去折腾映射，所以目前纯玩具。\
+谁要是闲着没事可以帮我写一下，欢迎PR。
+
+使用LanchWrapper启动、有TweakClass、有Mixin、有事件系统，显然，这就是(Neo)Forge😋
