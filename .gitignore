@@ -36,7 +36,8 @@ bin/
 /out
 /lib/**
 !/lib/*/
+/run/**
+!/run/*/
 assets/*/
-/run
-!**/readme.txt
+!**/readme.*
 

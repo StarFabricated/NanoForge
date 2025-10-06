@@ -6,6 +6,8 @@ technically this project is equal to `(Neo)Forge` without `FML` and `AccessTrans
 
 You can make what's missing yourself :)
 
+NEW: Now We Have `MixinLoader` ! put modid.mixins.json into your jar to use it.
+
 ps: we only support 0.98a
 ### how to use
 copy game jar to `lib/gameJar`\
@@ -19,3 +21,5 @@ or `runLanchWrapper` task
 谁要是闲着没事可以帮我写一下，欢迎PR。
 
 使用LanchWrapper启动、有TweakClass、有Mixin、有事件系统，显然，这就是(Neo)Forge😋
+
+现已支持加载纯Mixin，这玩意改一改再加点SPI啥的就是ModLoader了。

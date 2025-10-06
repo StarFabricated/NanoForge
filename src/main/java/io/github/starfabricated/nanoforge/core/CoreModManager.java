@@ -1,6 +1,6 @@
 package io.github.starfabricated.nanoforge.core;
 
 
-public class ModManager {
+public class CoreModManager {
 
 }

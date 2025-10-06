@@ -1,7 +1,7 @@
-package io.github.starfabricated.nanoforge.core.mixin;
+package io.github.starfabricated.nanoforge.mixin.gamehooks.bootstrap;
 
 
-import io.github.starfabricated.nanoforge.core.NanoForge;
+import io.github.starfabricated.nanoforge.NanoForge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
